@@ -3,7 +3,7 @@ const navigatorOpts = {
 }
 const nav = new Navigation({ geolocationOptions: navigatorOpts });
 
-if ("geolocation" in navigator) {
+if ("geolocation" in navigator && !!geolib) {
   document.querySelector('p').textContent = 'GPS Available, awaiting permission.';
   nav.start();
 } else {
