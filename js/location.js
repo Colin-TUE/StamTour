@@ -5,8 +5,8 @@ const locationArray = [{
   code: 'unlock',
   reached: false,
   coord: {
-      latitude: 52.030813,
-      longitude: 4.518329
+      latitude: 51.917110,
+      longitude: 4.477062
     }
   }
 ];
@@ -50,10 +50,17 @@ class Navigation {
 
     document.documentElement.style.setProperty(this.cssVar, deg);
   }
+  showDistance (distance) {
+    const gt = distance > 1000;
+    const convert = gt ? geolib.convertUnit('km', distance) : distance;
+    const suffix = gt ? 'kilometer' : 'meter';
+
+    this.elem.textContent = `Distance: ${convert} ${suffix}`;
+  }
 
   handleCoords (coords) {
     console.log(coords);
-    this.title.textContent = `Position aquired: ${new Date(coords.timestamp)}`;
+    this.title.textContent = `Own heading: ${coords.coords.heading} at speed: ${coords.coords.speed}`;
 
     const _coords = {
       latitude: coords.coords.latitude,
@@ -63,10 +70,7 @@ class Navigation {
     const direction = geolib.getCompassDirection(_coords, locationArray[0].coord);
     const bearing = geolib.getRhumbLineBearing(_coords, locationArray[0].coord);
 
-    console.log('from:', _coords, 'to: ', locationArray[0].coord);
-
     this.changeCompass(bearing, direction);
-
-    this.elem.textContent = `Distance: ${distance} meter`;
+    this.showDistance(distance);
   }
 }
