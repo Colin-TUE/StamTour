@@ -52,7 +52,7 @@ class Navigation {
   }
   showDistance (distance) {
     const gt = distance > 1000;
-    const convert = gt ? geolib.convertUnit('km', distance) : distance;
+    const convert = gt ? geolib.convertUnit('km', distance, 2) : distance;
     const suffix = gt ? 'kilometer' : 'meter';
 
     this.elem.textContent = `Distance: ${convert} ${suffix}`;
