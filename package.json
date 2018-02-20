@@ -1,0 +1,29 @@
+{
+  "name": "stamtour",
+  "version": "1.0.0",
+  "description": "Part of the route of the stamtour",
+  "main": "index.html",
+  "scripts": {
+    "test": "node -v"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Brutusn/StamTour.git"
+  },
+  "keywords": [
+    "Stam",
+    "Scouting",
+    "Tourtocht",
+    "2018"
+  ],
+  "author": "Bart Niessen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Brutusn/StamTour/issues"
+  },
+  "homepage": "https://github.com/Brutusn/StamTour#readme",
+  "dependencies": {
+    "geolib": "^2.0.24",
+    "vue": "^2.5.13"
+  }
+}
