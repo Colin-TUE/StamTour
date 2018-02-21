@@ -2,20 +2,20 @@
 // Code is to skip the current point, otherwise thing should be reached.
 // Coord is just the latlng of the location.
 const locationArray = [{
+  code: 'part 2',
+  reached: false,
+  coord: {
+      latitude: 52.162796,
+      longitude: 4.479680
+    }
+  }, {
   code: 'unlock',
   reached: false,
   coord: {
       latitude: 51.917110,
       longitude: 4.477062
     }
-  }, {
-    code: 'part 2',
-    reached: false,
-    coord: {
-        latitude: 52.162796,
-        longitude: 4.479680
-      }
-    }
+  }
 ];
 
 class NavHelpers {
