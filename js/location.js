@@ -40,6 +40,7 @@ class NavHelpers {
 
 class Navigation {
   constructor (opts = {}) {
+    // Loaction / navigator
     this.geoLocationOpts = opts.geolocationOptions;
     this.nav = navigator.geolocation;
     this.watchId = null;
@@ -50,15 +51,17 @@ class Navigation {
 
     // To what waypoint the direction is going?
     this.waypoint = localStorage.getItem('waypoint') || 0;
+    this.currentWord = '';
+
+    // Degrees the compass needs offset.
+    this.findRadius = 25;
+    this.compassOffset = 45;
+    this.cssVar = '--compass-rotation';
 
     // TEMP TESTING ONLY
     this.title = document.querySelector('p');
     this.elem = document.querySelector('h2');
     this.compassTxt = document.getElementById('msg');
-
-    // Degrees the compass needs offset.
-    this.compassOffset = 45;
-    this.cssVar = '--compass-rotation';
   }
 
   start () {
@@ -103,6 +106,10 @@ class Navigation {
     this.elem.textContent = `Distance: ${convert} ${suffix}`;
   }
 
+  get locationWord () {
+    return this.currentWord;
+  }
+
   setWaypoint (waypoint = 0) {
     const index = parseInt(waypoint, 10);
     const obj = locationArray[waypoint];
@@ -112,8 +119,8 @@ class Navigation {
     };
 
     if (!obj) {
-      store(0);
-      return locationArray[0];
+      // Just return the current waypoint;
+      return locationArray[this.waypoint];
     }
 
     store(index);
@@ -128,10 +135,22 @@ class Navigation {
 
     return locationArray[0];
   }
+  foundWaypoint (distance) {
+    if (distance < this.findRadius) {
+      // Point found.. whoohoo!
+      if ((this.waypoint + 1) < locationArray.length) {
+        // Next point is also an object.. so use that one next.
+        this.waypoint++;
+
+        // Todo add message "Point found"
+      }
+    }
+  }
 
   handleCoords (coords) {
     console.log(coords);
-    this.title.textContent = `Own heading: ${this.heading(coords.coords.heading)} at speed: ${this.speed(coords.coords.speed)}`;
+    this.title.textContent = `Heading: ${this.heading(coords.coords.heading)} deg,
+    at speed: ${this.speed(coords.coords.speed)}`;
 
     const toLocation = this.getWaypoint(this.waypoint);
     const heading = this.heading(coords.coords.heading);
@@ -143,7 +162,11 @@ class Navigation {
     const direction = geolib.getCompassDirection(_coords, toLocation.coord);
     const bearing = geolib.getRhumbLineBearing(_coords, toLocation.coord);
 
+    this.currentWord = toLocation.code;
     this.changeCompass(bearing, direction, heading);
     this.showDistance(distance);
+
+    // And are we close enough?
+    this.foundWaypoint(distance);
   }
 }
