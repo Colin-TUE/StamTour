@@ -2,14 +2,14 @@
 // Code is to skip the current point, otherwise thing should be reached.
 // Coord is just the latlng of the location.
 const locationArray = [{
-  code: 'part 2',
+  code: 'Code Word 2',
   reached: false,
   coord: {
       latitude: 52.162796,
       longitude: 4.479680
     }
   }, {
-  code: 'unlock',
+  code: 'Code word 1',
   reached: false,
   coord: {
       latitude: 51.917110,
@@ -45,9 +45,14 @@ class Navigation {
     this.nav = navigator.geolocation;
     this.watchId = null;
 
+    // Dashboard code...
+    this.dashboard = opts.dashboard;
+    this.infoPage = opts.infoPage;
+
     // Directional parts.
     this.lastHeading = 0;
     this.lastSpeed = 0;
+    this.distance = 0;
 
     // To what waypoint the direction is going?
     this.waypoint = localStorage.getItem('waypoint') || 0;
@@ -82,7 +87,7 @@ class Navigation {
   }
   // Returns last known speed (in case of gps los).
   speed (speed) {
-    if (speed !== null) {
+    if (speed) {
       this.lastSpeed = speed;
     }
 
@@ -91,23 +96,19 @@ class Navigation {
 
   // Changes the direction of the compass..
   changeCompass (bearing, direction, heading) {
-    this.compassTxt.textContent = direction.exact;
-
     const deg = bearing - heading + this.compassOffset + 'deg';
 
     document.documentElement.style.setProperty(this.cssVar, deg);
   }
+
   // Shows the distance left to the object.
-  showDistance (distance) {
+  get distanceToGo () {
+    const distance = this.distance;
     const gt = distance > 1000;
-    const convert = gt ? geolib.convertUnit('km', distance, 2) : distance;
+    const convert = gt ? geolib.convertUnit('km', distance, 1) : distance;
     const suffix = gt ? 'km' : 'm';
 
-    this.elem.textContent = `Distance: ${convert} ${suffix}`;
-  }
-
-  get locationWord () {
-    return this.currentWord;
+    return `${convert} ${suffix}`;
   }
 
   setWaypoint (waypoint = 0) {
@@ -147,10 +148,38 @@ class Navigation {
     }
   }
 
+  // Changes the VUE app..
+  refreshDashboard () {
+    if (!this.dashboard) {
+      return;
+    }
+
+    this.dashboard.compassMsg = this.speed();
+    this.dashboard.distance = this.distanceToGo;
+    this.dashboard.codeWord = this.currentWord;
+  }
+
+  refreshInfoPage (data) {
+    if (!this.infoPage) {
+      return;
+    }
+
+    // Looping somehow needs to be done, can't place the object directly
+    let obj = {};
+    for (let key in data) {
+      obj[key] = data[key];
+    }
+
+    this.infoPage.sensorData = Object.assign(
+      {},
+      this.infoPage.sensorData,
+      obj,
+    );
+  }
+
   handleCoords (coords) {
     console.log(coords);
-    this.title.textContent = `Heading: ${this.heading(coords.coords.heading)} deg,
-    at speed: ${this.speed(coords.coords.speed)}`;
+    this.speed(coords.coords.speed);
 
     const toLocation = this.getWaypoint(this.waypoint);
     const heading = this.heading(coords.coords.heading);
@@ -158,15 +187,16 @@ class Navigation {
       latitude: coords.coords.latitude,
       longitude: coords.coords.longitude,
     }
-    const distance = geolib.getDistance(_coords, toLocation.coord, 1, 1);
+    this.distance =  geolib.getDistance(_coords, toLocation.coord, 1, 1);
     const direction = geolib.getCompassDirection(_coords, toLocation.coord);
     const bearing = geolib.getRhumbLineBearing(_coords, toLocation.coord);
 
     this.currentWord = toLocation.code;
     this.changeCompass(bearing, direction, heading);
-    this.showDistance(distance);
 
     // And are we close enough?
+    this.refreshDashboard();
+    this.refreshInfoPage(coords.coords);
     this.foundWaypoint(distance);
   }
 }
