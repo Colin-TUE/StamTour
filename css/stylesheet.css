@@ -51,6 +51,7 @@ body {
   width: var(--compass-size);
   height: var(--compass-size);
   pointer-events: none;
+  margin-top: 1.5em;
 }
 .compass {
     position: absolute;
@@ -94,7 +95,7 @@ body {
 .full-page {
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
 }
 

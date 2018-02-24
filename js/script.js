@@ -23,18 +23,35 @@ const dashboard = new Vue({
   data: {
     compassMsg: '...',
     codeWord: 'Loading...',
-    distance: '404 km',
+    distance: '... km',
     open: true,
   },
   methods: sharedMethods,
 });
 
-const nav = new Navigation({
-  geolocationOptions: navigatorOpts,
-  dashboard,
-  infoPage,
-});
+const map = L.map('background-map', {
+  trackResize: false,
+  dragging: false,
+  doubleClickZoom: false,
+  boxZoom: false,
+  keyboard: false,
+  tap: false,
+}).setView([51.626780, 5.522619], 17);
+
+//L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+//L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
 if ("geolocation" in navigator && !!geolib) {
+  const nav = new Navigation({
+    geolocationOptions: navigatorOpts,
+    dashboard,
+    infoPage,
+    bgMap: map,
+  });
+
   nav.start();
 
   // document.getElementById('test-set-point').addEventListener('input', (evt) => {
@@ -43,5 +60,5 @@ if ("geolocation" in navigator && !!geolib) {
 } else {
   /* geolocation IS NOT available */
   // TODO
-  document.querySelector('h1').textContent = 'GPS not available';
+  alert('GPS not available');
 }

@@ -48,6 +48,7 @@ class Navigation {
     // Dashboard code...
     this.dashboard = opts.dashboard;
     this.infoPage = opts.infoPage;
+    this.map = opts.bgMap;
 
     // Directional parts.
     this.lastHeading = 0;
@@ -177,6 +178,10 @@ class Navigation {
     );
   }
 
+  refreshMap (coords) {
+    this.map.setView([coords.latitude, coords.longitude]);
+  }
+
   handleCoords (coords) {
     console.log(coords);
     this.speed(coords.coords.speed);
@@ -197,6 +202,7 @@ class Navigation {
     // And are we close enough?
     this.refreshDashboard();
     this.refreshInfoPage(coords.coords);
+    this.refreshMap(_coords);
     this.foundWaypoint(distance);
   }
 }
