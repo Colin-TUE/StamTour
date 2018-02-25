@@ -42,11 +42,16 @@
     </div>
   </div>
 
-  <div id="info-page" style="display: none;" v-show="open" class="full-page">
+  <div id="info-page" style="display: none;" v-show="open" class="full-page info-page">
     <button id="info-button" v-on:click="toggleInfo" class="error rounded floating-right"><i class="fa fa-times" aria-hidden="true"></i></button>
     <article>
       <h1>Information</h1>
-      <p></p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In congue ullamcorper leo.
+
+        Phasellus vulputate enim et ipsum rhoncus, sed scelerisque orci molestie. Morbi venenatis enim sem. Nunc nec arcu ligula. Maecenas pharetra tristique nisi, eget viverra ex faucibus id.
+
+        Aliquam fermentum sollicitudin turpis eu rhoncus. Nam convallis iaculis tortor ut pulvinar. Etiam diam est, viverra id lacus quis, ultrices fringilla enim.
+      </p>
     </article>
 
     <article>
@@ -65,7 +70,10 @@
 
     <article>
       <h1>Code word</h1>
-      <p></p>
+      <p>
+        <input type="text" id="code-word-text" placeholder="Type here...">
+        <button id="code-word-submit">Check</button>
+      </p>
     </article>
 
     <template v-if="development">

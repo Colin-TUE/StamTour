@@ -1,11 +1,23 @@
 /* With code from: https://codepen.io/MarcMalignan/pen/kftvL?q=compass&limit=all&type=type-pens */
+/* base colour in hex: #C12E2E; Compass background color: #444 */
+
 
 :root {
+  --hue: 0;
+  --saturation: 80%;
+  --lightness: 47%;
   --compass-rotation: 0deg;
-  --compass-red: #C12E2E;
-  --black: #230808;
-  --dark: #721b1b;
-  --white: #fcf2f2;
+  --compass-red: hsla(var(--hue), var(--saturation), var(--lightness), 1);
+
+  --black-ligth: 5%;
+  --black: hsla(var(--hue), var(--saturation), var(--black-ligth), 1);
+  --black-t: hsla(var(--hue), var(--saturation), var(--black-ligth), .9);
+
+  --dark-light: 20%;
+  --dark: hsla(var(--hue), var(--saturation), var(--dark-light), 1);
+  --dark-t: hsla(var(--hue), var(--saturation), var(--dark-light), .9);
+
+  --white: hsla(var(--hue), var(--saturation), 90%, 1);
   --blue: #4183D7;
 }
 
@@ -30,11 +42,12 @@ body {
   font-size: 150%;
   width: 1.5em;
   height: 1.5em;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 .floating-right {
   position: fixed;
-  top: .5em;
-  right: .5em;
+  top: .25em;
+  right: .25em;
 }
 
 .info {
@@ -54,26 +67,27 @@ body {
   margin-top: 1.5em;
 }
 .compass {
-    position: absolute;
-    width:100%; height:100%;
-    background: #444;
-    border-radius: 0 50% 50% 50%;
-    border: 10px solid var(--white);
-    box-shadow: 0 0 8px rgba(0,0,125,.2);
-    border-right-color: var(--compass-red);
-    border-bottom-color: var(--compass-red);
-    box-sizing: border-box;
-    transform: rotate(var(--compass-rotation));
-    transition: transform .5s ease;
+  position: absolute;
+  width:100%;
+  height:100%;
+  background: var(--black-t);
+  border-radius: 0 50% 50% 50%;
+  border: 10px solid var(--white);
+  box-shadow: 0 0 8px rgba(0,0,0,0.23);
+  border-right-color: var(--compass-red);
+  border-bottom-color: var(--compass-red);
+  box-sizing: border-box;
+  transform: rotate(var(--compass-rotation));
+  transition: transform .5s ease;
 }
 .compass-msg {
-    position: absolute;
-    width:100%;
-    height:100%;
-    line-height: var(--compass-size);
-    text-align: center;
-    font-weight: 300;
-    font-size: 200%;
+  position: absolute;
+  width:100%;
+  height:100%;
+  line-height: var(--compass-size);
+  text-align: center;
+  font-weight: 300;
+  font-size: 200%;
 }
 
 @media all and (max-height: 550px) {
@@ -90,6 +104,14 @@ body {
 .map {
   position: fixed;
   background-color: gray;
+}
+.map:after {
+  content: '';
+  background-color: rgba(68, 68, 68, .8);
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 1000;
 }
 
 .full-page {
@@ -117,9 +139,11 @@ body {
   height: calc(100vh / 8);
   min-height: 70px;
   width: 100vw;
-  background-color: var(--dark);
+  background-color: var(--dark-t);
   padding: .5em;
   display: flex;
+
+  border-top: 5px solid var(--white);
 
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -144,4 +168,33 @@ body {
   font-size: 200%;
   font-weight: bold;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, .25);
+}
+
+.info-page {
+  color: var(--black);
+}
+.info-page article {
+  background-color: var(--white);
+  margin: .5em;
+  padding: .5em;
+  border-radius: 3px;
+}
+.info-page h1 {
+  margin: 0;
+  padding: 0;
+}
+
+.info-page table {
+  border-collapse: collapse;
+}
+
+.info-page td, .info-page th {
+  text-align: left;
+  padding: .25em .25em .25em 0;
+}
+.info-page td:first-of-type {
+  text-transform: capitalize;
+  max-width: 35vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

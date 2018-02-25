@@ -32,16 +32,21 @@ const dashboard = new Vue({
 const map = L.map('background-map', {
   trackResize: false,
   dragging: false,
+  zoomControl: false,
+  attributionControl: false,
   doubleClickZoom: false,
   boxZoom: false,
   keyboard: false,
   tap: false,
-}).setView([51.626780, 5.522619], 17);
+});
+
+// Sets the start to the clubhouse.
+map.setView([51.626780, 5.522619], 17);
 
 //L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 //L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    attribution: false,
 }).addTo(map);
 
 if ("geolocation" in navigator && !!geolib) {

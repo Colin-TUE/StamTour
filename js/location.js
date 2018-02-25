@@ -168,7 +168,7 @@ class Navigation {
     // Looping somehow needs to be done, can't place the object directly
     let obj = {};
     for (let key in data) {
-      obj[key] = data[key];
+      obj[key] = data[key] || 'n/a';
     }
 
     this.infoPage.sensorData = Object.assign(
@@ -179,7 +179,7 @@ class Navigation {
   }
 
   refreshMap (coords) {
-    this.map.setView([coords.latitude, coords.longitude]);
+    this.map.panTo([coords.latitude, coords.longitude], { animate: true });
   }
 
   handleCoords (coords) {
