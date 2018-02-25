@@ -168,7 +168,7 @@ class Navigation {
     // Looping somehow needs to be done, can't place the object directly
     let obj = {};
     for (let key in data) {
-      obj[key] = data[key] || 'n/a';
+      obj[key] = data[key !== null ? data[key] : 'n/a';
     }
 
     this.infoPage.sensorData = Object.assign(
