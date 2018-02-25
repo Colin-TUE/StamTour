@@ -24,6 +24,7 @@
   "homepage": "https://github.com/Brutusn/StamTour#readme",
   "dependencies": {
     "geolib": "^2.0.24",
+    "nosleep.js": "^0.7.0",
     "vue": "^2.5.13"
   }
 }

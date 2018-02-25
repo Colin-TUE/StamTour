@@ -1,3 +1,10 @@
+if (!"geolocation" in navigator) {
+  alert("No geo options available, application renders useless.");
+  throw new Error("No geo");
+}
+
+const noSleep = new NoSleep();
+
 const navigatorOpts = {
   enableHighAccuracy: true
 }
@@ -16,7 +23,14 @@ const infoPage = new Vue({
     open: false,
     sensorData: {},
   },
-  methods: sharedMethods,
+  methods: Object.assign({
+    setWaypoint: (evt) => {
+      nav.setWaypoint(evt.target.value);
+    },
+    resetWaypoint: () => {
+      nav.setWaypoint(0);
+    },
+  }, sharedMethods),
 });
 const dashboard = new Vue({
   el: '#dashboard',
@@ -49,21 +63,12 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map
     attribution: false,
 }).addTo(map);
 
-if ("geolocation" in navigator && !!geolib) {
-  const nav = new Navigation({
-    geolocationOptions: navigatorOpts,
-    dashboard,
-    infoPage,
-    bgMap: map,
-  });
+const nav = new Navigation({
+  geolocationOptions: navigatorOpts,
+  dashboard,
+  infoPage,
+  bgMap: map,
+});
 
-  nav.start();
-
-  // document.getElementById('test-set-point').addEventListener('input', (evt) => {
-  //   nav.setWaypoint(evt.target.value);
-  // });
-} else {
-  /* geolocation IS NOT available */
-  // TODO
-  alert('GPS not available');
-}
+nav.start();
+noSleep.enable();

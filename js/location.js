@@ -2,18 +2,40 @@
 // Code is to skip the current point, otherwise thing should be reached.
 // Coord is just the latlng of the location.
 const locationArray = [{
-  code: 'Code Word 2',
-  reached: false,
+  code: 'N11 Start',
   coord: {
-      latitude: 52.162796,
-      longitude: 4.479680
+      latitude: 52.139139935048696,
+      longitude: 4.511550286507145
     }
   }, {
-  code: 'Code word 1',
-  reached: false,
+  code: 'Bodegraven',
   coord: {
-      latitude: 51.917110,
-      longitude: 4.477062
+      latitude: 52.066699,
+      longitude: 4.755482
+    }
+  }, {
+  code: 'Utrecht',
+  coord: {
+      latitude: 52.064278,
+      longitude: 5.067387
+    }
+  }, {
+  code: 'Den Bosch',
+  coord: {
+      latitude: 51.729569,
+      longitude: 5.315399
+    }
+  }, {
+  code: 'Schaijk',
+  coord: {
+      latitude: 51.733755,
+      longitude: 5.632674
+    }
+  }, {
+  code: 'Blokhut',
+  coord: {
+      latitude: 51.626780,
+      longitude: 5.522619
     }
   }
 ];
@@ -80,7 +102,7 @@ class Navigation {
 
   // Returns last known heading (in case of gps loss).
   heading (heading) {
-    if (heading !== null) {
+    if (heading || heading === 0) {
       this.lastHeading = heading;
     }
 
@@ -88,7 +110,7 @@ class Navigation {
   }
   // Returns last known speed (in case of gps los).
   speed (speed) {
-    if (speed) {
+    if (speed || speed === 0) {
       this.lastSpeed = speed;
     }
 
@@ -203,6 +225,6 @@ class Navigation {
     this.refreshDashboard();
     this.refreshInfoPage(coords.coords);
     this.refreshMap(_coords);
-    this.foundWaypoint(distance);
+    this.foundWaypoint(this.distance);
   }
 }

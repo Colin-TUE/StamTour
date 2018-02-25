@@ -17,6 +17,7 @@
     <script defer src="https://use.fontawesome.com/3cdc861506.js"></script>
     <script defer src="node_modules/vue/dist/vue.js"></script>
     <script defer src="node_modules/geolib/dist/geolib.js"></script>
+    <script defer src="node_modules/nosleep.js/dist/NoSleep.min.js"></script>
     <script defer src="js/location.js"></script>
     <script defer src="js/script.js"></script>
 </head>
@@ -52,6 +53,7 @@
 
         Aliquam fermentum sollicitudin turpis eu rhoncus. Nam convallis iaculis tortor ut pulvinar. Etiam diam est, viverra id lacus quis, ultrices fringilla enim.
       </p>
+      <button v-on:click="resetWaypoint">Start over</button>
     </article>
 
     <article>
@@ -80,7 +82,7 @@
       <article>
         <h1>Development mode:</h1>
         <label for="set-waypoint">Change waypoint:</label>
-        <input type="number" value="0" min="0" max="10" id="set-waypoint">
+        <input type="number" value="0" min="0" max="10" id="set-waypoint" v-on:input="setWaypoint">
       </article>
     </template>
   </div>
