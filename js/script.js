@@ -35,7 +35,7 @@ const infoPage = new Vue({
 const dashboard = new Vue({
   el: '#dashboard',
   data: {
-    compassMsg: '...',
+    speed: '130',
     codeWord: 'Loading...',
     distance: '... km',
     open: true,

@@ -85,11 +85,6 @@ class Navigation {
     this.findRadius = 25;
     this.compassOffset = 45;
     this.cssVar = '--compass-rotation';
-
-    // TEMP TESTING ONLY
-    this.title = document.querySelector('p');
-    this.elem = document.querySelector('h2');
-    this.compassTxt = document.getElementById('msg');
   }
 
   start () {
@@ -114,11 +109,11 @@ class Navigation {
       this.lastSpeed = speed;
     }
 
-    return NavHelpers.toKmh(this.lastSpeed);
+    return NavHelpers.toKmh(this.lastSpeed, '');
   }
 
   // Changes the direction of the compass..
-  changeCompass (bearing, direction, heading) {
+  changeCompass (bearing, heading) {
     const deg = bearing - heading + this.compassOffset + 'deg';
 
     document.documentElement.style.setProperty(this.cssVar, deg);
@@ -177,7 +172,7 @@ class Navigation {
       return;
     }
 
-    this.dashboard.compassMsg = this.speed();
+    this.dashboard.speed = this.speed();
     this.dashboard.distance = this.distanceToGo;
     this.dashboard.codeWord = this.currentWord;
   }
@@ -215,11 +210,10 @@ class Navigation {
       longitude: coords.coords.longitude,
     }
     this.distance =  geolib.getDistance(_coords, toLocation.coord, 1, 1);
-    const direction = geolib.getCompassDirection(_coords, toLocation.coord);
     const bearing = geolib.getRhumbLineBearing(_coords, toLocation.coord);
 
     this.currentWord = toLocation.code;
-    this.changeCompass(bearing, direction, heading);
+    this.changeCompass(bearing, heading);
 
     // And are we close enough?
     this.refreshDashboard();

@@ -29,12 +29,12 @@
   <div id="background-map" class="full-page map"></div>
 
   <div id="dashboard" v-show="open" class="full-page">
+    <div class="speed-sign">{{ speed }}</div>
     <div class="top-bar">
       <div class="compass-wrap" id="compass-wrap">
         <div class="compass" id="compass"></div>
-        <div class="compass-msg" id="compass-msg">{{ compassMsg }}</div>
+        <div class="compass-msg" id="compass-msg">{{ distance }}</div>
       </div>
-      <div id="distance" class="distance-display"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ distance }}</div>
     </div>
 
     <div id="footer" class="bottom-bar">
