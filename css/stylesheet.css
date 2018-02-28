@@ -115,7 +115,7 @@ input, button {
 }
 .map:after {
   content: '';
-  background-color: rgba(68, 68, 68, .7);
+  background: linear-gradient(to bottom, rgba(68, 68, 68, 1) 0%, rgba(68, 68, 68, .7) 25%, rgba(68, 68, 68, .7) 100%);
   position: fixed;
   height: 100vh;
   width: 100vw;
