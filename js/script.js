@@ -35,7 +35,7 @@ const infoPage = new Vue({
 const dashboard = new Vue({
   el: '#dashboard',
   data: {
-    speed: '130',
+    speed: '0',
     codeWord: 'Loading...',
     distance: '... km',
     open: true,
