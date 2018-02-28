@@ -179,7 +179,7 @@ input, button {
 
 .code-word {
   font-weight: bold;
-  font-size: 125%;
+  font-size: 150%;
   text-transform: uppercase;
 }
 .code-word:before {
