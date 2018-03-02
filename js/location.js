@@ -1,38 +1,41 @@
 // Object will look something like this.
 // Code is to skip the current point, otherwise thing should be reached.
 // Coord is just the latlng of the location.
+// =-=-=-=-=
+// Generate codes by running: ['code1', 'code2', ...].forEach((i) => console.log(i, NavHelpers.encode(i.toLowerCase(), 29)));
+// In a browser console.
 const locationArray = [{
-  code: 'N11 Start',
+  code: 'Y29kZTE=',
   coord: {
       latitude: 52.139139935048696,
       longitude: 4.511550286507145
     }
   }, {
-  code: 'Bodegraven',
+  code: 'Y29kZTI=',
   coord: {
       latitude: 52.066699,
       longitude: 4.755482
     }
   }, {
-  code: 'Utrecht',
+  code: 'Y29kZTM=',
   coord: {
       latitude: 52.064278,
       longitude: 5.067387
     }
   }, {
-  code: 'Den Bosch',
+  code: 'Y29kZTQ=',
   coord: {
       latitude: 51.729569,
       longitude: 5.315399
     }
   }, {
-  code: 'Schaijk',
+  code: 'Y29kZTU=',
   coord: {
       latitude: 51.733755,
       longitude: 5.632674
     }
   }, {
-  code: 'Blokhut',
+  code: 'Y29kZTY=',
   coord: {
       latitude: 51.626780,
       longitude: 5.522619
@@ -58,6 +61,12 @@ class NavHelpers {
 
     alert(message);
   }
+  static encode (str = '') {
+		return btoa(str);
+	}
+  static decode (str = '') {
+    return atob(str);
+  }
 }
 
 class Navigation {
@@ -73,13 +82,13 @@ class Navigation {
     this.map = opts.bgMap;
 
     // Directional parts.
+    this.latestCoords = {};
     this.lastHeading = 0;
     this.lastSpeed = 0;
     this.distance = 0;
 
     // To what waypoint the direction is going?
     this.waypoint = localStorage.getItem('waypoint') || 0;
-    this.currentWord = '';
 
     // Degrees the compass needs offset.
     this.findRadius = 25;
@@ -117,6 +126,24 @@ class Navigation {
     const deg = bearing - heading + this.compassOffset + 'deg';
 
     document.documentElement.style.setProperty(this.cssVar, deg);
+  }
+
+  checkCodeWord (code) {
+    const serialized = code.toString().toLowerCase();
+    const encoded = NavHelpers.encode(serialized);
+    const lower = (str) => {
+      // Always check for lower cased codes..
+      return NavHelpers.encode(NavHelpers.decode(str).toLowerCase());
+    };
+
+    const index = locationArray.findIndex((item) => lower(item.code) === encoded);
+
+    if (index >= 0) {
+      this.setWaypoint(index);
+      this.handleCoords();
+    } else {
+      alert('Code onbekend');
+    }
   }
 
   // Shows the distance left to the object.
@@ -174,7 +201,7 @@ class Navigation {
 
     this.dashboard.speed = this.speed();
     this.dashboard.distance = this.distanceToGo;
-    this.dashboard.codeWord = this.currentWord;
+    this.dashboard.codeWord = NavHelpers.decode(locationArray[this.waypoint].code);
   }
 
   refreshInfoPage (data) {
@@ -199,8 +226,9 @@ class Navigation {
     this.map.panTo([coords.latitude, coords.longitude], { animate: true });
   }
 
-  handleCoords (coords) {
+  handleCoords (coords = this.latestCoords) {
     console.log(coords);
+    this.latestCoords = coords;
     this.speed(coords.coords.speed);
 
     const toLocation = this.getWaypoint(this.waypoint);
@@ -212,7 +240,6 @@ class Navigation {
     this.distance =  geolib.getDistance(_coords, toLocation.coord, 1, 1);
     const bearing = geolib.getRhumbLineBearing(_coords, toLocation.coord);
 
-    this.currentWord = toLocation.code;
     this.changeCompass(bearing, heading);
 
     // And are we close enough?

@@ -22,13 +22,26 @@ const infoPage = new Vue({
     development: location.hash === '#develop',
     open: false,
     sensorData: {},
+    codeWordText: '',
+  },
+  computed: {
+    disableBtn: function () {
+      return this.codeWordText.length < 3;
+    }
   },
   methods: Object.assign({
     setWaypoint: (evt) => {
       nav.setWaypoint(evt.target.value);
     },
     resetWaypoint: () => {
-      nav.setWaypoint(0);
+      const reset = confirm('Weet je het zeker?!');
+
+      if (reset) {
+        nav.setWaypoint(0);
+      }
+    },
+    verifyCodeWord: (value) => {
+      nav.checkCodeWord(value);
     },
   }, sharedMethods),
 });

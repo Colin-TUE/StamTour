@@ -205,6 +205,7 @@ input, button {
   margin: .5em;
   padding: .5em;
   border-radius: 3px;
+  box-shadow: var(--drop-shadow);
 }
 .info-page h1 {
   margin: 0;
