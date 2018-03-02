@@ -80,6 +80,7 @@ const map = L.map('background-map', {
   boxZoom: false,
   keyboard: false,
   tap: false,
+  zoom: 17,
 });
 
 // Sets the start to the clubhouse.
