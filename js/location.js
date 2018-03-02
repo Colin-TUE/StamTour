@@ -1,3 +1,4 @@
+'use strict';
 // Object will look something like this.
 // Code is to skip the current point, otherwise thing should be reached.
 // Coord is just the latlng of the location.
@@ -57,9 +58,9 @@ class NavHelpers {
   static gpsError (error) {
     // TODO: extend function to support
     console.error(error);
-    const message = `GPS error: ${error.message} (code: ${error.code})`;
+    const message = `GPS error: ${error.message} (code: ${error.code}).`;
 
-    alert(message);
+    modal.message({ message, type: 'error' });
   }
   static encode (str = '') {
 		return btoa(str);
@@ -142,8 +143,11 @@ class Navigation {
       this.setWaypoint(index);
       this.handleCoords();
     } else {
-      alert('Code onbekend');
+      modal.message({ message: 'Code onbekend', type: 'warning' });
     }
+  }
+  get currentWord () {
+    return NavHelpers.decode(locationArray[this.waypoint].code);
   }
 
   // Shows the distance left to the object.
@@ -188,7 +192,11 @@ class Navigation {
         // Next point is also an object.. so use that one next.
         this.waypoint++;
 
-        // Todo add message "Point found"
+        modal.message({
+          message: `Locatie gevonden! Het nieuwe codewoord: ${this.currentWord}.`,
+          type: 'success',
+          duration: 5000,
+        });
       }
     }
   }
@@ -201,7 +209,7 @@ class Navigation {
 
     this.dashboard.speed = this.speed();
     this.dashboard.distance = this.distanceToGo;
-    this.dashboard.codeWord = NavHelpers.decode(locationArray[this.waypoint].code);
+    this.dashboard.codeWord = this.currentWord;
   }
 
   refreshInfoPage (data) {

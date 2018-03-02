@@ -11,6 +11,7 @@
     <title>S5 Stam autospeurtocht 2018 - Route x</title>
 
     <link rel="stylesheet" href="css/stylesheet.css" >
+    <link rel="stylesheet" href="css/modal.css" >
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
 
     <!-- First load the vue library -->
@@ -20,13 +21,12 @@
     <script defer src="https://use.fontawesome.com/3cdc861506.js"></script>
     <script defer src="node_modules/geolib/dist/geolib.js"></script>
     <script defer src="node_modules/nosleep.js/dist/NoSleep.min.js"></script>
+    <script defer src="js/messagemodal.js"></script>
     <script defer src="js/location.js"></script>
     <script defer src="js/script.js"></script>
 </head>
 <body>
-  <!--
-  <div id="dialog" class="dialog-message">TODO</div>
-  -->
+  <div class="modal-curtain modal-hidden"><div id="modal" class="modal"><p class="modal-content" id="modal-content"></p></div></div>
 
   <div id="background-map" class="full-page map"></div>
 

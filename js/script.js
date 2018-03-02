@@ -1,7 +1,18 @@
+'use strict';
+
 if (!"geolocation" in navigator) {
-  alert("No geo options available, application renders useless.");
+  modal.message({
+    message: 'No geo options available, application renders useless.',
+    type: 'error',
+  });
   throw new Error("No geo");
 }
+
+modal.message({
+  message: 'Welkom bij route n van de autospeurtocht. Volg de pijl en blijf in beweging! Klik op de knop beneden voor meer informatie.',
+  type: 'info',
+  duration: 7500,
+});
 
 const noSleep = new NoSleep();
 
@@ -38,6 +49,10 @@ const infoPage = new Vue({
 
       if (reset) {
         nav.setWaypoint(0);
+        modal.message({
+          message: 'Route succesvol gereset.',
+          type: 'success',
+        });
       }
     },
     verifyCodeWord: (value) => {
