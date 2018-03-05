@@ -28,7 +28,7 @@ class CustomLayerSwitcher {
     }
 
     this.map.addLayer(newLayer);
-    this.map.setZoom(17);
+    this.map.setZoom(16);
     this.currentLayer = newLayer;
   }
   get layerNames () {
@@ -74,7 +74,7 @@ const map = L.map('background-map', {
   boxZoom: false,
   keyboard: false,
   tap: false,
-  zoom: 17,
+  zoom: 16,
 });
 
 // Sets the start to the clubhouse.

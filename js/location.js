@@ -8,38 +8,62 @@
 const locationArray = [{
   code: 'Y29kZTE=',
   coord: {
-      latitude: 52.139139935048696,
-      longitude: 4.511550286507145
+      latitude: 51.639038,
+      longitude: 5.169106,
     }
   }, {
   code: 'Y29kZTI=',
   coord: {
-      latitude: 52.066699,
-      longitude: 4.755482
+      latitude: 51.612240,
+      longitude: 5.141348
     }
   }, {
   code: 'Y29kZTM=',
   coord: {
-      latitude: 52.064278,
-      longitude: 5.067387
+      latitude: 51.620971,
+      longitude: 5.099253
     }
   }, {
   code: 'Y29kZTQ=',
   coord: {
-      latitude: 51.729569,
-      longitude: 5.315399
+      latitude: 51.620113,
+      longitude: 5.076370
     }
   }, {
   code: 'Y29kZTU=',
   coord: {
-      latitude: 51.733755,
-      longitude: 5.632674
+      latitude: 51.624051,
+      longitude: 5.043365
     }
   }, {
   code: 'Y29kZTY=',
   coord: {
-      latitude: 51.626780,
-      longitude: 5.522619
+      latitude: 51.616424,
+      longitude: 4.975508
+    }
+  }, {
+  code: 'Y29kZTc=',
+  coord: {
+      latitude: 51.603454,
+      longitude: 4.952579
+    }
+  }, {
+  code: 'Y29kZTg=',
+  coord: {
+      latitude: 51.571191,
+      longitude: 4.961319
+    }
+  }, {
+  code: 'Y29kZTk=',
+  coord: {
+      latitude: 51.541972,
+      longitude: 4.957954
+    }
+  }, {
+  code: 'Y29kZTEw',
+  coord: {
+      latitude: 51.500606,
+      longitude: 4.967265
     }
   }
 ];
