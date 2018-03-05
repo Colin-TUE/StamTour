@@ -63,8 +63,8 @@ class NavHelpers {
     modal.message({ message, type: 'error' });
   }
   static encode (str = '') {
-		return btoa(str);
-	}
+    return btoa(str);
+  }
   static decode (str = '') {
     return atob(str);
   }
@@ -231,7 +231,11 @@ class Navigation {
   }
 
   refreshMap (coords) {
-    this.map.panTo([coords.latitude, coords.longitude], { animate: true });
+    this.map.panTo([coords.latitude, coords.longitude], {
+      animate: true,
+      easeLinearity: 1,
+      duration: 1
+     });
   }
 
   handleCoords (coords = this.latestCoords) {

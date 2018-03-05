@@ -49,11 +49,14 @@
     <button id="info-button" v-on:click="toggleInfo" class="error rounded floating-right"><i class="fa fa-times" aria-hidden="true"></i></button>
     <article>
       <h1>Informatie</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In congue ullamcorper leo.
-
-        Phasellus vulputate enim et ipsum rhoncus, sed scelerisque orci molestie. Morbi venenatis enim sem. Nunc nec arcu ligula. Maecenas pharetra tristique nisi, eget viverra ex faucibus id.
-
-        Aliquam fermentum sollicitudin turpis eu rhoncus. Nam convallis iaculis tortor ut pulvinar. Etiam diam est, viverra id lacus quis, ultrices fringilla enim.
+      <p>Dit deel van de route werkt als een "klasieke" gps tocht. De pijl geeft de richting aan van het volgende punt.
+        In de pijl staat de resterende afstand tot het volgende punt. Zodra je bij het punt aan bent gekomen wijst de pijl
+        naar het volgende punt. <br />
+        Bij ieder punt krijg je een nieuw codewoord. Vergeet deze niet op te schrijven! De codewoorden zul je aan het einde moeten inleveren.
+        Mocht een telefoon uitvallen kun je in het blokje hieronder het laatst gevonden codewoord invullen om verder te gaan met de route.
+        <br /><br />
+        Belangrijk, vergeet niet om toestemming te geven voor het opvragen van de locatie!<br />
+        Voor de werking van de gps aanwijzer is het belangrijk om in beweging te blijven. De app onthoudt, bij stilstand, de laatst gereden richting.
       </p>
       <button v-on:click="resetWaypoint">Begin opnieuw</button>
     </article>
