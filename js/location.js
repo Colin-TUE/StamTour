@@ -80,7 +80,6 @@ class NavHelpers {
     return Math.round(_speed * 3.6) + suffix;
   }
   static gpsError (error) {
-    // TODO: extend function to support
     console.error(error);
     const message = `GPS error: ${error.message} (code: ${error.code}).`;
 
