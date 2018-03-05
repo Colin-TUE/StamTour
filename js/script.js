@@ -8,6 +8,34 @@ if (!"geolocation" in navigator) {
   throw new Error("No geo");
 }
 
+class CustomLayerSwitcher {
+  constructor (map, layers) {
+    this.map = map;
+    this.layers = layers;
+
+    this.currentLayer = null;
+  }
+
+  switch (layer) {
+    const newLayer = this.layers[layer];
+    if (!newLayer) {
+      // Cannot switch to unknown layer.
+      return;
+    }
+
+    if (this.currentLayer) {
+      this.map.removeLayer(this.currentLayer);
+    }
+
+    this.map.addLayer(newLayer);
+    this.map.setZoom(17);
+    this.currentLayer = newLayer;
+  }
+  get layerNames () {
+    return Object.keys(this.layers);
+  }
+}
+
 modal.message({
   message: 'Welkom bij route n van de autospeurtocht. Volg de pijl en blijf in beweging! Klik op de knop beneden voor meer informatie.',
   type: 'info',
@@ -27,6 +55,34 @@ const sharedMethods = {
   }
 }
 
+const layerOptions = { attribution: false };
+const pickableLayers = {
+  'OSM': L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', layerOptions),
+  'OSM no road': L.tileLayer('https://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png', layerOptions),
+  'Open topo': L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', layerOptions),
+  'Arcgis picture': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', layerOptions),
+  'NL luchtfoto': L.tileLayer('https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/1.0.0/2016_ortho25/EPSG:3857/{z}/{x}/{y}.png', layerOptions),
+  'BW mapnik': L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', layerOptions),
+}
+
+const map = L.map('background-map', {
+  trackResize: false,
+  dragging: false,
+  zoomControl: false,
+  attributionControl: false,
+  doubleClickZoom: false,
+  boxZoom: false,
+  keyboard: false,
+  tap: false,
+  zoom: 17,
+});
+
+// Sets the start to the clubhouse.
+map.setView([51.626780, 5.522619], 17);
+pickableLayers.OSM.addTo(map);
+
+const layerSwitcher = new CustomLayerSwitcher(map, pickableLayers);
+
 const infoPage = new Vue({
   el: '#info-page',
   data: {
@@ -34,6 +90,7 @@ const infoPage = new Vue({
     open: false,
     sensorData: {},
     codeWordText: '',
+    layers: layerSwitcher.layerNames,
   },
   computed: {
     disableBtn: function () {
@@ -58,6 +115,9 @@ const infoPage = new Vue({
     verifyCodeWord: (value) => {
       nav.checkCodeWord(value);
     },
+    changeLayer: (value) => {
+      layerSwitcher.switch(value.target.value);
+    },
   }, sharedMethods),
 });
 const dashboard = new Vue({
@@ -70,31 +130,6 @@ const dashboard = new Vue({
   },
   methods: sharedMethods,
 });
-
-const map = L.map('background-map', {
-  trackResize: false,
-  dragging: false,
-  zoomControl: false,
-  attributionControl: false,
-  doubleClickZoom: false,
-  boxZoom: false,
-  keyboard: false,
-  tap: false,
-  zoom: 17,
-});
-
-// Sets the start to the clubhouse.
-map.setView([51.626780, 5.522619], 17);
-
-//L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-//L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-L.tileLayer('https://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png', {
-//L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-//L.tileLayer('https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/1.0.0/2016_ortho25/EPSG:3857/{z}/{x}/{y}.png', {
-//L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
-//L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-    attribution: false,
-}).addTo(map);
 
 const nav = new Navigation({
   geolocationOptions: navigatorOpts,

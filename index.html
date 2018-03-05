@@ -89,6 +89,12 @@
         <h1>Development mode:</h1>
         <label for="set-waypoint">Change waypoint:</label>
         <input type="number" value="0" min="0" max="10" id="set-waypoint" v-on:input="setWaypoint">
+        <br />
+        <label for="layer-switcher">Change background layer:</label>
+        <select id="layer-switcher" v-on:change="changeLayer">
+          <option disabled value="">Select a layer</option>
+          <option v-for="layer of layers" v-bind:value="layer">{{ layer }}</option>
+        </select>
       </article>
     </template>
   </div>
