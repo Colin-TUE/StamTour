@@ -6,61 +6,61 @@
 // Generate codes by running: ['code1', 'code2', ...].forEach((i) => console.log(i, NavHelpers.encode(i.toLowerCase(), 29)));
 // In a browser console.
 const locationArray = [{
-  code: 'Y29kZTE=',
+  code: 'b3BlbiB2bGFrdGU=',
   coord: {
       latitude: 51.639038,
       longitude: 5.169106,
     }
   }, {
-  code: 'Y29kZTI=',
+  code: 'bWRjY2MgeGxpeA==',
   coord: {
       latitude: 51.612240,
       longitude: 5.141348
     }
   }, {
-  code: 'Y29kZTM=',
+  code: 'a25vb3BwdW50IDk0',
   coord: {
       latitude: 51.620971,
       longitude: 5.099253
     }
   }, {
-  code: 'Y29kZTQ=',
+  code: 'cm90b25kZQ==',
   coord: {
       latitude: 51.620113,
       longitude: 5.076370
     }
   }, {
-  code: 'Y29kZTU=',
+  code: 'a2FtcCBkZSBtb2Vy',
   coord: {
       latitude: 51.624051,
       longitude: 5.043365
     }
   }, {
-  code: 'Y29kZTY=',
+  code: 'cGFxdWVz',
   coord: {
       latitude: 51.616424,
       longitude: 4.975508
     }
   }, {
-  code: 'Y29kZTc=',
+  code: 'd2luZG1vbGVucw==',
   coord: {
       latitude: 51.603454,
       longitude: 4.952579
     }
   }, {
-  code: 'Y29kZTg=',
+  code: 'bmlldXdib3V3d2lqaw==',
   coord: {
       latitude: 51.571191,
       longitude: 4.961319
     }
   }, {
-  code: 'Y29kZTk=',
+  code: 'a25vb3BwdW50IDcx',
   coord: {
       latitude: 51.541972,
       longitude: 4.957954
     }
   }, {
-  code: 'Y29kZTEw',
+  code: 'YnVuZ2EgbWVsYXRp',
   coord: {
       latitude: 51.500606,
       longitude: 4.967265
