@@ -1,72 +1,76 @@
 'use strict';
 
 class Modal {
-    constructor () {
-        this.curtain = document.querySelector('.modal-curtain');
-        this.modal = document.getElementById('modal');
-        this.content = document.getElementById('modal-content');
+  constructor () {
+    this.curtain = document.querySelector('.modal-curtain');
+    this.modal = document.getElementById('modal');
+    this.content = document.getElementById('modal-content');
 
-        this.knownTypes = ['error', 'warning', 'info', 'success'];
+    this.knownTypes = ['error', 'warning', 'info', 'success'];
 
-        this.modalTimer = null;
-        this.timeout = 3000;
+    this.modalTimer = null;
+    this.timeout = 3000;
 
-        this.addClickEvent();
+    this.addClickEvent();
+  }
+
+  addClickEvent () {
+    this.curtain.onclick = (evt) => {
+      this.hide();
+    }
+  }
+
+  clear () {
+    this.setMessage('');
+    this.hide();
+  }
+
+  clearTimer () {
+    if (this.modalTimer) {
+      window.clearTimeout(this.modalTimer);
+    }
+  }
+
+  show () {
+    this.curtain.classList.remove('modal-hidden');
+
+    this.clearTimer();
+    this.modalTimer = window.setTimeout(this.hide.bind(this), this.timeout);
+  }
+
+  hide () {
+    this.curtain.classList.add('modal-hidden');
+    this.clearTimer();
+  }
+
+  setType (type) {
+    if (!this.knownTypes.includes(type)) {
+      return;
     }
 
-    addClickEvent () {
-        this.curtain.onclick = (evt) => {
-            this.hide();
-        }
+    for (const t of this.knownTypes) {
+      this.modal.classList.remove(t);
     }
+    this.modal.classList.add(type);
+  }
 
-    clear () {
-        this.setMessage('');
-        this.hide();
-    }
-    clearTimer () {
-        if (this.modalTimer) {
-            window.clearTimeout(this.modalTimer);
-        }
-    }
+  setMessage (msg) {
+    this.content.textContent = msg;
+    this.show();
+  }
 
-    show () {
-        this.curtain.classList.remove('modal-hidden');
-
-        this.clearTimer();
-        this.modalTimer = window.setTimeout(this.hide.bind(this), this.timeout);
+  message (msg) {
+    let displaymsg = '';
+    if (msg instanceof Object) {
+      this.timeout = msg.duration || 3000;
+      this.setType(msg.type);
+      displaymsg = msg.message
+    } else {
+      this.timeout = 3000;
+      displaymsg = msg;
     }
-    hide () {
-        this.curtain.classList.add('modal-hidden');
-        this.clearTimer();
-    }
-    setType (type) {
-        if (!this.knownTypes.includes(type)) {
-            return;
-        }
-
-        for (const t of this.knownTypes) {
-            this.modal.classList.remove(t);
-        }
-        this.modal.classList.add(type);
-    }
-    setMessage (msg) {
-        this.content.textContent = msg;
-        this.show();
-    }
-
-    message (msg) {
-        let displaymsg = '';
-        if (msg instanceof Object) {
-            this.timeout = msg.duration || 3000;
-            this.setType(msg.type);
-            displaymsg = msg.message
-        } else {
-            this.timeout = 3000;
-            displaymsg = msg;
-        }
-        this.setMessage(displaymsg);
-    }
+    this.setMessage(displaymsg);
+  }
 }
 
 const modal = new Modal();

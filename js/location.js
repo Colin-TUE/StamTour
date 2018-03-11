@@ -177,7 +177,7 @@ class Navigation {
   get distanceToGo () {
     const distance = this.distance;
     const gt = distance > 1000;
-    const convert = gt ? geolib.convertUnit('km', distance, 1) : distance;
+    const convert = gt ? geolib.convertUnit('km', distance, 1) : Math.round(distance);
     const suffix = gt ? 'km' : 'm';
 
     return `${convert} ${suffix}`;
@@ -271,7 +271,7 @@ class Navigation {
     const _coords = {
       latitude: coords.coords.latitude,
       longitude: coords.coords.longitude,
-    }
+    };
     this.distance =  geolib.getDistance(_coords, toLocation.coord, 1, 1);
     const bearing = geolib.getRhumbLineBearing(_coords, toLocation.coord);
 

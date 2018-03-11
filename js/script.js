@@ -37,23 +37,23 @@ class CustomLayerSwitcher {
 }
 
 modal.message({
-  message: 'Welkom bij route n van de autospeurtocht. Volg de pijl en blijf in beweging! Klik op de knop beneden voor meer informatie.',
+  message: `Welkom bij route 4 van de autospeurtocht. Volg de pijl en blijf in beweging! Klik op de info knop beneden voor meer informatie.`,
   type: 'info',
-  duration: 7500,
+  duration: 10000,
 });
 
 const noSleep = new NoSleep();
 
 const navigatorOpts = {
   enableHighAccuracy: true
-}
+};
 
 const sharedMethods = {
   toggleInfo: () => {
     infoPage.open = !infoPage.open;
     dashboard.open = !dashboard.open;
   }
-}
+};
 
 const layerOptions = { attribution: false };
 const pickableLayers = {
@@ -63,7 +63,7 @@ const pickableLayers = {
   'Arcgis picture': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', layerOptions),
   'NL luchtfoto': L.tileLayer('https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/1.0.0/2016_ortho25/EPSG:3857/{z}/{x}/{y}.png', layerOptions),
   'BW mapnik': L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', layerOptions),
-}
+};
 
 const map = L.map('background-map', {
   trackResize: false,
@@ -78,8 +78,9 @@ const map = L.map('background-map', {
 });
 
 // Sets the start to the clubhouse.
-map.setView([51.626780, 5.522619], 17);
-pickableLayers.OSM.addTo(map);
+map.setView([51.626780, 5.522619], 16);
+pickableLayers['OSM no road'].addTo(map);
+map.setZoom(16);
 
 const layerSwitcher = new CustomLayerSwitcher(map, pickableLayers);
 
@@ -124,7 +125,7 @@ const dashboard = new Vue({
   el: '#dashboard',
   data: {
     speed: '0',
-    codeWord: 'Loading...',
+    codeWord: 'Laden...',
     distance: '... km',
     open: true,
   },
