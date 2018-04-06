@@ -119,6 +119,14 @@ const infoPage = new Vue({
     changeLayer: (value) => {
       layerSwitcher.switch(value.target.value);
     },
+    resetGps: () => {
+      nav.stop();
+      nav.start();
+      modal.message({
+        message: 'Vergeet niet op "toestaan" te drukken!',
+        type: 'info'
+      });
+    },
   }, sharedMethods),
 });
 const dashboard = new Vue({
