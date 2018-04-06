@@ -127,6 +127,14 @@ const infoPage = new Vue({
         type: 'info'
       });
     },
+    enableScreenOn: () => {
+      noSleep.disable();
+      noSleep.enable();
+      modal.message({
+        message: 'Het scherm zou nu aan moeten blijven.',
+        type: 'info'
+      });
+    },
   }, sharedMethods),
 });
 const dashboard = new Vue({
