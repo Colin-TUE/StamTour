@@ -18,7 +18,6 @@
     <script src="node_modules/vue/dist/vue.min.js"></script>
 
     <script defer src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
-    <script defer src="https://use.fontawesome.com/3cdc861506.js"></script>
     <script defer src="node_modules/geolib/dist/geolib.js"></script>
     <script defer src="node_modules/nosleep.js/dist/NoSleep.min.js"></script>
     <script defer src="js/messagemodal.js"></script>
@@ -41,12 +40,42 @@
 
     <div id="footer" class="bottom-bar">
       <span id="code-word" class="code-word">{{ codeWord }}</span>
-      <button id="info-button" v-on:click="toggleInfo" class="info rounded"><i class="fa fa-info" aria-hidden="true"></i></button>
+      <button id="info-button" v-on:click="toggleInfo" class="info rounded">&#8505;</button>
     </div>
   </div>
 
   <div id="info-page" style="display: none;" v-show="open" class="full-page info-page">
-    <button id="info-button" v-on:click="toggleInfo" class="error rounded floating-right"><i class="fa fa-times" aria-hidden="true"></i></button>
+    <button id="info-button" v-on:click="toggleInfo" class="error rounded floating-right">&#10006;</button>
+
+    <template v-if="gpsDisabled">
+      <article>
+        <h1>Help ik heb mijn GPS geblokeerd!</h1>
+        <p>
+          <p>Dat is niet zo slim, je hebt toch echt je gps nodig voor deze route.</p>
+          <p><h2>Chrome / Brave:</h2>
+            <ol>
+              <li>Ga naar de <b>settings</b></li>
+              <li>Ga naar <b>advanced</b> en dan <b>site settings</b></li>
+              <li>Klik op <b>location</b></li>
+              <li>Open het kopje <b>blocked</b></li>
+              <li>Open de de klik op de website <b>...brutusn.github.io...</b></li>
+              <li>Klik op <b>clear & reset</b></li>
+              <li>Herlaad de pagina en sta de gps toe.</li>
+            </ol>
+          </p>
+          <p><h2>Safari:</h2>
+            Probeer 1 van de volgende links. (Sorry Android gebruiker hier)
+            <ol>
+              <li><i>First, please make sure you're not in private browsing mode since Safari will automatically block location services while in this mode. Next, go to your iOS Settings > Privacy > Location Services > Safari and make sure you've allowed Safari access to your location "While Using the App".</i></li>
+              <li><a href="https://support.apple.com/en-us/HT203033" target="_blank">support.apple.com</a></li>
+              <li><a href="https://www.wikihow.com/Turn-On-Location-Services-on-an-iPhone-or-iPad" target="_blank">wikihow.com</a></li>
+              <li><a href="https://www.google.com" target="_blank">google.com</a></li>
+            </ol>
+          </p>
+        </p>
+      </article>
+    </template>
+
     <article>
       <h1>Informatie</h1>
       <p>Dit deel van de route werkt als een "klasieke" gps tocht. De pijl geeft de richting aan van het volgende punt.
@@ -72,19 +101,21 @@
       </p>
     </article>
 
-    <article>
-      <h1>Geeky hoekje.:</h1>
-      <p>
-        <table>
-          <thead><tr><th colspan="2">GPS sensor waardes</th></tr></thead>
-          <tbody>
-            <template v-for="(value, key) in sensorData">
-              <tr><td>{{ key }}</td><td>{{ value }}</td></tr>
-            </template>
-          </tbody>
-        </table>
-      </p>
-    </article>
+    <template v-if="!gpsDisabled">
+      <article>
+        <h1>Geeky hoekje.:</h1>
+        <p>
+          <table>
+            <thead><tr><th colspan="2">GPS sensor waardes</th></tr></thead>
+            <tbody>
+              <template v-for="(value, key) in sensorData">
+                <tr><td>{{ key }}</td><td>{{ value }}</td></tr>
+              </template>
+            </tbody>
+          </table>
+        </p>
+      </article>
+    </template>
 
     <template v-if="development">
       <article>

@@ -36,12 +36,6 @@ class CustomLayerSwitcher {
   }
 }
 
-modal.message({
-  message: `Welkom bij route 4 van de autospeurtocht. Volg de pijl en blijf in beweging! Klik op de info knop beneden voor meer informatie.`,
-  type: 'info',
-  duration: 10000,
-});
-
 const noSleep = new NoSleep();
 
 const navigatorOpts = {
@@ -88,6 +82,7 @@ const infoPage = new Vue({
   el: '#info-page',
   data: {
     development: location.hash === '#develop',
+    gpsDisabled: false,
     open: false,
     sensorData: {},
     codeWordText: '',
@@ -119,14 +114,6 @@ const infoPage = new Vue({
     changeLayer: (value) => {
       layerSwitcher.switch(value.target.value);
     },
-    resetGps: () => {
-      nav.stop();
-      nav.start();
-      modal.message({
-        message: 'Vergeet niet op "toestaan" te drukken!',
-        type: 'info'
-      });
-    },
     enableScreenOn: () => {
       noSleep.disable();
       noSleep.enable();
@@ -155,11 +142,11 @@ const nav = new Navigation({
   bgMap: map,
 });
 
-nav.start();
-
-function enableNoSleep () {
+modal.message({
+  message: `Welkom bij route 4 van de autospeurtocht! Klik op dit venster om de route te starten. Er word gevraagd om het verlenen van toegang tot de GPS. Sta dit toe, anders wordt de route flink lastig.`,
+  type: 'info',
+  duration: 0,
+}, () => {
   noSleep.enable();
-  document.removeEventListener('click', enableNoSleep, false);
-}
-
-document.addEventListener('click', enableNoSleep, false);
+  nav.start();
+});

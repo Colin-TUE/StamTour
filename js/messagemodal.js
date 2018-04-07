@@ -11,6 +11,8 @@ class Modal {
     this.modalTimer = null;
     this.timeout = 3000;
 
+    this.afterClickFn = null;
+
     this.addClickEvent();
   }
 
@@ -35,12 +37,22 @@ class Modal {
     this.curtain.classList.remove('modal-hidden');
 
     this.clearTimer();
-    this.modalTimer = window.setTimeout(this.hide.bind(this), this.timeout);
+
+    if (this.timeout > 0) {
+      this.modalTimer = window.setTimeout(this.hide.bind(this), this.timeout);
+    }
   }
 
   hide () {
     this.curtain.classList.add('modal-hidden');
     this.clearTimer();
+    this.afterClick();
+  }
+
+  afterClick () {
+    if (this.afterClickFn !== null) {
+      this.afterClickFn();
+    }
   }
 
   setType (type) {
@@ -59,16 +71,21 @@ class Modal {
     this.show();
   }
 
-  message (msg) {
+  message (msg, afterClickFn = null) {
     let displaymsg = '';
     if (msg instanceof Object) {
-      this.timeout = msg.duration || 3000;
+      this.timeout = !isNaN(msg.duration) ? msg.duration : 3000;
       this.setType(msg.type);
       displaymsg = msg.message
     } else {
       this.timeout = 3000;
+      this.setType('info');
       displaymsg = msg;
     }
+
+    // Set the after click function, but only if it's a function.
+    this.afterClickFn = typeof afterClickFn === 'function' ? afterClickFn : null;
+
     this.setMessage(displaymsg);
   }
 }

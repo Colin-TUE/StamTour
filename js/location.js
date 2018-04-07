@@ -83,6 +83,11 @@ class NavHelpers {
     console.error(error);
     const message = `GPS error: ${error.message} (code: ${error.code}).`;
 
+    // Nasty trick, but it works.. Globals FTW!! ;)
+    if (infoPage) {
+      infoPage.gpsDisabled = true;
+    }
+
     modal.message({ message, type: 'error' });
   }
   static encode (str = '') {
