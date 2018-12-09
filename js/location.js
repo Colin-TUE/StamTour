@@ -6,64 +6,51 @@
 // Generate codes by running: ['code1', 'code2', ...].forEach((i) => console.log(i, NavHelpers.encode(i.toLowerCase(), 29)));
 // In a browser console.
 const locationArray = [{
-  code: 'b3BlbiB2bGFrdGU=',
+  code: 'cG9zdA==',
   coord: {
-      latitude: 51.639038,
-      longitude: 5.169106,
+      latitude: 51.701114,
+      longitude: 5.954895,
     }
   }, {
-  code: 'bWRjY2MgeGxpeA==',
+  code: 'd2VnZWluZGU=',
   coord: {
-      latitude: 51.612240,
-      longitude: 5.141348
+      latitude: 51.675402,
+      longitude: 5.961284
     }
   }, {
-  code: 'a25vb3BwdW50IDk0',
+  code: 'dmVubmV0amU=',
   coord: {
-      latitude: 51.620971,
-      longitude: 5.099253
+      latitude: 51.659853,
+      longitude: 5.926366
     }
   }, {
-  code: 'cm90b25kZQ==',
+  code: 'c2xvb3RqZQ==',
   coord: {
-      latitude: 51.620113,
-      longitude: 5.076370
+      latitude: 51.625877,
+      longitude: 5.954718
     }
   }, {
-  code: 'a2FtcCBkZSBtb2Vy',
+  code: 'aGVpbGlnZQ==',
   coord: {
-      latitude: 51.624051,
-      longitude: 5.043365
+      latitude: 51.622000,
+      longitude: 5.982688
     }
   }, {
-  code: 'cGFxdWVz',
+  code: 'cGFubmVua29la2Vu',
   coord: {
-      latitude: 51.616424,
-      longitude: 4.975508
+      latitude: 51.594617,
+      longitude: 5.998415
     }
   }, {
-  code: 'd2luZG1vbGVucw==',
+  code: 'bWFyaWE=',
   coord: {
-      latitude: 51.603454,
-      longitude: 4.952579
-    }
-  }, {
-  code: 'bmlldXdib3V3d2lqaw==',
+      latitude: 51.585798,
+      longitude: 6.028043
+    }, {
+  code: 'Y2hhbXBhZ25l',
   coord: {
-      latitude: 51.571191,
-      longitude: 4.961319
-    }
-  }, {
-  code: 'a25vb3BwdW50IDcx',
-  coord: {
-      latitude: 51.541972,
-      longitude: 4.957954
-    }
-  }, {
-  code: 'YnVuZ2EgbWVsYXRp',
-  coord: {
-      latitude: 51.500606,
-      longitude: 4.967265
+      latitude: 51.558334,
+      longitude: 6.037009
     }
   }
 ];

@@ -143,7 +143,7 @@ const nav = new Navigation({
 });
 
 modal.message({
-  message: `Welkom bij route 4 van de autospeurtocht! Klik op dit venster om de route te starten. Er word gevraagd om het verlenen van toegang tot de GPS. Sta dit toe, anders wordt de route flink lastig.`,
+  message: `Welkom bij route IV van de autospeurtocht! Klik op dit venster om de route te starten. Er word gevraagd om het verlenen van toegang tot de GPS. Sta dit toe, anders wordt de route flink lastig.`,
   type: 'info',
   duration: 0,
 }, () => {
